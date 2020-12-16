@@ -1,0 +1,15 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<p>Are you sure you want to delete "{{customer.name}}"?</p>
+<form action="{% url 'delete_customer' customer.id %}"method="POST">
+    {% csrf_token %}
+    
+    <input class="btn btn-danger" type="submit" name="Confirm">
+    <a href="{% url 'home' %}">Cancel</a>
+</form>
+
+{% endblock %}

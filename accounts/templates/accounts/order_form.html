@@ -1,0 +1,25 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6">
+        <div style="padding: 5%;" class="card card-body">
+<!-- This is a form that works with django the fields are specified in forms.py -->
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{formSet.management_form}}
+        {% for form in formSet %}
+            {{form}}
+            <br>
+            <hr>
+        {% endfor %}
+        <input type="submit" name="Submit">
+    </form>
+
+</div>
+</div>
+</div>
+{% endblock %}
