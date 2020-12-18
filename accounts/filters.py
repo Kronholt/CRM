@@ -1,5 +1,5 @@
 import django_filters 
-from .models import *
+from .models import Order
 from django_filters import DateFilter, CharFilter
 
 class OrderFilter(django_filters.FilterSet):
