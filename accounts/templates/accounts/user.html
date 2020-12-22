@@ -1,0 +1,38 @@
+<!-- This allows us to load the content of dashboard into the content tags of main.html -->
+{% extends 'accounts/main.html' %}
+
+<!-- Everything inside these tags will be included in the main template -->
+{% block content %}
+<!-- This includes the content of status.html in this section of webpage -->
+{% include 'accounts/status.html' %}
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th>Product</th>
+                    <th>Note</th>
+                    <th>Date Ordered</th>
+                    <th>Status</th>
+                    
+                </tr>
+
+                {% for order in orders %}
+                <tr>
+                    <td>{{order.product}}</td>
+                    <td>{{order.note}}</td>
+                    <td>{{order.date_created}}</td>
+                    <td>{{order.status}}</td>
+                    
+
+                </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
