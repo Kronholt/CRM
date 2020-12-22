@@ -13,6 +13,9 @@ from django.contrib.auth.decorators import login_required
 from .decorators import *
 from django.contrib.auth.models import Group
 
+# ------ Home -------
+#dashboard for admins in application - allows viewing of all customers and orders 
+
 #this @ tag makes a login required to access this page, users not logged in will be redirected to login screen
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
@@ -29,6 +32,8 @@ def home(request):
     context = {'is_admin':is_admin, 'orders':orders, 'customers':customers, 'total_customers':total_customers, 'total_orders':total_orders, 'delivered':delivered, 'pending':pending,}
     return render(request, 'accounts/dashboard.html', context)
 
+# ------ userPage -------
+#this page can only be accessed by customers, and is their dashboard - allows viewing of all orders
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['customer'])
 def userPage(request):
@@ -43,7 +48,26 @@ def userPage(request):
     return render(request, template, context)
 
 
+# ------ accountSettings -------
+#This allows the customer to view their settings and change profile picture 
+@login_required(login_url='login')
+@allowed_users(allowed_roles = ['customer'])
+def accountSettings(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid:
+            form.save()
+    template = 'accounts/account_settings.html'
+    context = {'form':form}
 
+    return render(request, template, context)
+
+# ------ register -------
+#this allows new users to create an account 
+
+#this tag prevents authenticated users from re-registering
 @unauthenticated_user
 def register(request):
     #this functionality stops a user from visiting register while logged int
@@ -66,6 +90,8 @@ def register(request):
             messages.error(request, 'Something went wrong, please try again.')
     return render(request, template, context)
 
+# ------ loginPage-------
+#accessed by unauthenticated (not logged in) users - used to login
 @unauthenticated_user
 def loginPage(request):
     #this functionality stops a user from visiting login page while logged int
@@ -80,21 +106,26 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Username or password is incorrect')
-            
-
     template = 'accounts/login.html'
     return render(request, template, context)
 
+# ------ logoutUser-------
+#logs user out of application
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
+# ------ products -------
+#allows admins to view the products page
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def products(request):
     products = Product.objects.all()
     return render(request, 'accounts/products.html', {'products':products})
 
+
+# ------ customer -------
+#This allows the admin to locate a customer's information page 
 #this receives the pk from view and matches with customer
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
@@ -109,7 +140,8 @@ def customer(request, pk):
 
 # Create your views here.
 
-
+# ------ createOrders -------
+#allows admin to create orders for customer's 
 #this creates an order using the form specified as OrderForm in forms.py
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
@@ -130,6 +162,8 @@ def createOrder(request, pk):
 
     return render(request, 'accounts/order_form.html', context)
 
+# ------ updateOrder -------
+#functionality for updating an existing order
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def updateOrder(request, pk):
@@ -146,6 +180,8 @@ def updateOrder(request, pk):
 
     return render(request, 'accounts/order_form.html', context)
 
+# ------ createCustomer -------
+#allows the admin to create a new customer object - this feature is deprecated.
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def createCustomer(request):
@@ -159,6 +195,9 @@ def createCustomer(request):
 
     return render(request, 'accounts/customer_form.html', context)
 
+
+# ------ updateCustomer -------
+#this allows the admin to update a customer object
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def updateCustomer(request, pk):
@@ -175,6 +214,8 @@ def updateCustomer(request, pk):
 
     return render(request, 'accounts/customer_form.html', context)
 
+# ------ deleteCustomer -------
+#allows deletion of customer object 
 #use a delete template
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
@@ -186,13 +227,16 @@ def deleteCustomer(request, pk):
     context = {'customer':customer}
     return render(request, 'accounts/delete_customer.html', context)
 
+# ------ addOrder -------
+#this function is deprecated
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def addOrder(request, pk):
     customer = Customer.objects.get(id=pk)
     
 
-
+# ------ deleteOrder -------
+#allows admin to delete order
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def deleteOrder(request, pk):
