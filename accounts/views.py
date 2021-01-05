@@ -18,7 +18,7 @@ from django.contrib.auth.models import Group
 
 #this @ tag makes a login required to access this page, users not logged in will be redirected to login screen
 @login_required(login_url='login')
-@allowed_users(allowed_roles = ['admin'])
+@admin_only
 def home(request):
     orders = Order.objects.all()
     customers = Customer.objects.all()
