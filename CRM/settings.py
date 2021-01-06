@@ -165,11 +165,11 @@ EMAIL_HOST_PASSWORD = os.environ['email']
 #changed CORS configurations
 #generated IAM user and gave s3 permissions - this gives the keys below
 AWS_S3_REGION_NAME = 'us-east-2'
-AWS_ACCESS_KEY_ID = os.environ['aws_key_id']
-AWS_SECRET_ACCESS_KEY = os.environ['aws_access_key']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = 'kronholt-crm2-bucket'
 
-from boto3.s3.
+
 
 
 
