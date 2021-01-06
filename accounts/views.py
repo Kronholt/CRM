@@ -116,8 +116,9 @@ def logoutUser(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles = ['admin'])
 def products(request):
+    is_admin = True
     products = Product.objects.all()
-    return render(request, 'accounts/products.html', {'products':products})
+    return render(request, 'accounts/products.html', {'products':products, 'is_admin':is_admin})
 
 
 # ------ customer -------
@@ -131,7 +132,7 @@ def customer(request, pk):
     order_total = orders.count()
     myFilter = OrderFilter(request.GET, queryset=orders)
     orders = myFilter.qs
-    context = {'customer': customer, 'orders':orders, 'order_total':order_total, 'myFilter':myFilter}
+    context = {'customer': customer, 'orders':orders, 'order_total':order_total, 'myFilter':myFilter, 'is_admin':True}
     return render(request, 'accounts/customer.html', context)
 
 # Create your views here.
@@ -146,7 +147,7 @@ def createOrder(request, pk):
     customer = Customer.objects.get(id=pk)
     formSet = OrderFormSet(queryset=Order.objects.none(), instance=customer)
     # form = OrderForm(initial={'customer':customer})
-    context = {'formSet':formSet}
+    context = {'formSet':formSet, 'is_admin':True}
     #received POST request from client
     if request.method == 'POST':
         formSet = OrderFormSet(request.POST, instance=customer)
@@ -172,7 +173,7 @@ def updateOrder(request, pk):
         if form.is_valid():
             form.save()
             return redirect('/')
-    context = {'form':form}
+    context = {'form':form, 'is_admin':True}
 
     return render(request, 'accounts/order_form.html', context)
 
@@ -182,7 +183,7 @@ def updateOrder(request, pk):
 @allowed_users(allowed_roles = ['admin'])
 def createCustomer(request):
     form = CustomerForm()
-    context = {'form': form}
+    context = {'form': form, 'is_admin':True}
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.is_valid():
@@ -206,7 +207,7 @@ def updateCustomer(request, pk):
         if form.is_valid():
             form.save()
             return redirect('/')
-    context = {'form':form}
+    context = {'form':form, 'is_admin':True}
 
     return render(request, 'accounts/customer_form.html', context)
 
@@ -220,7 +221,7 @@ def deleteCustomer(request, pk):
     if request.method == "POST":
         customer.delete()
         return redirect('/')
-    context = {'customer':customer}
+    context = {'customer':customer, 'is_admin':True}
     return render(request, 'accounts/delete_customer.html', context)
 
 # ------ addOrder -------
@@ -240,7 +241,7 @@ def deleteOrder(request, pk):
     if request.method == "POST":
         order.delete()
         return redirect('/')
-    context = {'item':order}
+    context = {'item':order, 'is_admin':True}
     return render(request, 'accounts/delete.html', context)
 
     
