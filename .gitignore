@@ -1,2 +1,4 @@
 .env
 CRM/.env
+
+CRM/__pycache__
