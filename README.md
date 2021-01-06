@@ -4,3 +4,6 @@ This application was developed primarily to allow companies to track customers a
 customers have the ability to register an account, log in, and track the status of their current orders.
 
 
+The database is hosted using Amazon RDS with Postgres.
+
+The server is hosted on Heroku
