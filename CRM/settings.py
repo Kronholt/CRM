@@ -164,19 +164,19 @@ EMAIL_HOST_PASSWORD = os.environ['email']
 #created S3 bucket on AWS
 #changed CORS configurations
 #generated IAM user and gave s3 permissions - this gives the keys below
-AWS_S3_REGION_NAME = 'us-east-2'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = 'kronholt-crm2-bucket'
+# AWS_S3_REGION_NAME = 'us-east-2'
+# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+# AWS_STORAGE_BUCKET_NAME = 'kronholt-crm2-bucket'
 
 
 
 
 
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 
