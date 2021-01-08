@@ -10,3 +10,5 @@ Password: T3stP@ss
 
 The database is hosted using Amazon RDS with Postgres.
 The server is hosted on Heroku
+
+The website is live at https://nimble-data.herokuapp.com/
